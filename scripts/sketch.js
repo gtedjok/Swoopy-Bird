@@ -24,6 +24,11 @@ function draw() {
 
 
   }
+  
+  //if (bird.hitBottom()){
+    //add something to reset?
+    //score -=?
+  //}
 }
 
 function mousePressed() {
