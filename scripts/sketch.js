@@ -14,8 +14,10 @@ var score = 0;
 var time = 1500;
 var readyToPlay = true;
 var levelSelector = false;
+var quad;
 
 function setup() {
+  quad = loadImage('quad.jpg');
   createCanvas(windowWidth, windowHeight);
 
   timer = new Timer(time); //Time between drop 300ms
@@ -27,17 +29,15 @@ function setup() {
 function draw() {
 
   background(255);
+  quad.resize(windowWidth,windowHeight);
+  image(quad, 0, 0);
+
+
   if (!levelSelector){
     level.display();
   }
 
-  // if (level == 1){
-  //
-  // }else if (level == 2){
-  //
-  // }else if (level == 3){
-  //
-  // }
+
   if (levelSelector){
     if (bird.y + bird.r > windowHeight || bird.y + bird.r < 0){ //Bird dies if it touches the top of the window or floor
       isDead = true;
@@ -47,15 +47,14 @@ function draw() {
     }
     if (timer.isFinished() && !isDead && !readyToPlay) { // time for new pipe
       score += 1; //If Bird is alive
-      print("Sopawn");
       if (level == 1){
-        pipeList.push(new Pipes(5));
+        pipeList.push(new Pipes(3));
       }
       else if (level == 2){
-        pipeList.push(new Pipes(6));
+        pipeList.push(new Pipes(4));
       }
       else if (level == 3){
-        pipeList.push(new Pipes(7));
+        pipeList.push(new Pipes(6));
 
       }
       timer.start(); //restart timer for next drop
@@ -111,20 +110,20 @@ function keyPressed() {
 
     if (key == '1'){
       level = 1;
-      bird = new Bird(40, 0.1, 4);
-      pipe = new Pipes(5);
+      bird = new Bird(0.1, 4);
+      pipe = new Pipes(3);
       levelSelector = true;
     }
     else if (key == '2'){
       level = 2;
-      bird = new Bird(42, 0.13, 4.5);
-      pipe = new Pipes(6);
+      bird = new Bird(0.12, 6);
+      pipe = new Pipes(4);
       levelSelector = true;
     }
     else if (key == '3'){
       level = 3;
-      bird = new Bird(44, 0.16, 5);
-      pipe = new Pipes(7);
+      bird = new Bird(0.13, 8);
+      pipe = new Pipes(5);
       levelSelector = true;
     }
   }
@@ -132,8 +131,6 @@ function keyPressed() {
     if (keyCode == RETURN && !isDead) {
       bird.up();
     }
-    print(readyToPlay);
-    print(isDead);
     if (keyCode == RETURN && !readyToPlay && isDead){
       readyToPlay = true;
       bird.x = windowWidth/2;  //so bird is in the middle
